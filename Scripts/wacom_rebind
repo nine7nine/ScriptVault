@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# disable i2c designware (wacom) the driver is shit, causes sporadic xruns and 
+# excessive cpu usage (it literally uses 30-50% of one cpu thread. FFS.
+
+echo -n "AMDI0010:00" > '/sys/bus/platform/drivers/i2c_designware/bind' 
+
+sleep 2
+
+exec /usr/bin/wacom_lenovo.sh

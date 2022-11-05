@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# create cgroup (v2) for low latency / RT processes
+cgcreate -a ninez -t ninez -g cpu,cpuset,memory,io:audio_rt
+# create cgroup (v2) for Interactive Desktop processes
+cgcreate -a ninez -t ninez -g cpu,cpuset,memory,io:desktop
+
+# move/add pids to new audio_rt cgroup
+cgclassify -g cpu,cpuset,memory,io:audio_rt `pgrep wine`
+cgclassify -g cpu,cpuset,memory,io:audio_rt `pgrep yabridge`
+cgclassify -g cpu,cpuset,memory,io:audio_rt `pgrep carla`
+cgclassify -g cpu,cpuset,memory,io:audio_rt `pgrep jackd`
+
+# move/add pids to new Desktop cgroup
+cgclassify -g cpu,cpuset,memory,io:desktop `pgrep gnome-shell`
+cgclassify -g cpu,cpuset,memory,io:desktop `pgrep Xorg`
+cgclassify -g cpu,cpuset,memory,io:desktop `pgrep dockx`
+
+# set up RT cgroups attributes/values
+cgset -r cpu.weight.nice=-20 audio_rt
+cgset -r cpu.latency.nice=-20 audio_rt 
+cgset -r cpuset.cpus=0-7 audio_rt
+
+# set up Desktop cgroups attributes/values
+cgset -r cpu.weight.nice=-10 desktop
+cgset -r cpu.latency.nice=-10 desktop 
+cgset -r cpuset.cpus=0-7 desktop
+
+# quick chrt script for setting up 
+# threaded irq priorities
+for pid in $(pgrep irq/67-WCOM51C4); do chrt -f -p 45 $pid; done
+for pid in $(pgrep amdgpu); do chrt -f -p 55 $pid; done
+for pid in $(pgrep snd_hda_); do chrt -f -p 98 $pid; done
+for pid in $(pgrep irq/40-xhci_); do chrt -f -p 80 $pid; done
+
+# ionice for audio RT group
+ionice -n 0 -c 1 -p `pgrep wine`
+ionice -n 0 -c 1 -p `pgrep yabridge`
+ionice -n 0 -c 1 -p `pgrep carla`
+ionice -n 0 -c 1 -p `pgrep jackd`
+
+# ionice for Desktop group
+ionice -n 3 -c 2 -p `pgrep gnome-shell`
+ionice -n 5 -c 2 -p `pgrep dockx`
+ionice -n 0 -c 2 -p `pgrep Xorg`

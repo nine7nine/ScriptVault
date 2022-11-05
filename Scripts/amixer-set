@@ -1,0 +1,11 @@
+#!/bin/bash
+
+amixer -q -c 0 set Master unmute
+amixer -q -c 0 set Speaker unmute
+amixer -q -c 0 set Headphone unmute
+amixer -q -c 0 sset 'Master' 100%
+amixer -q -c 0 sset 'Speaker' 99%
+amixer -q -c 0 sset 'Headphone' 100%
+amixer -q -c 0 sset 'PCM' 100%
+
+

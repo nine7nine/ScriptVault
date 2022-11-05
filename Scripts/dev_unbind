@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# lenovo usb unbind - kill power drain components
+
+#Integrated Camera
+echo '1-4' | sudo tee /sys/bus/usb/drivers/usb/unbind
+
+# echo suspend | sudo tee  /sys/bus/usb/devices/1-4/power/level
+
+# Goodix FingerPrint Device
+echo '3-1.2' | sudo tee /sys/bus/usb/drivers/usb/unbind
+
+# Realtek Bluetooth Radio
+echo '3-2' | sudo tee /sys/bus/usb/drivers/usb/unbind
+
+# unbind bma250E
+# echo 'i2c-BMA250E:00' | sudo tee /sys/bus/i2c/drivers/i2c_hid_acpi/i2c-BMA250E:00/driver/unbind
+

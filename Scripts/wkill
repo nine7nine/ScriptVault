@@ -1,0 +1,26 @@
+#!/bin/sh
+echo ""
+echo "------------------"
+echo "Force-killing Wine" 
+echo "------------------"
+echo ""
+killall services.exe
+killall winedevice.exe
+killall plugplay.exe
+killall 'Native Accesss.e'
+killall explorer.exe
+killall Element.exe
+killall NTKDaemon.exe
+killall NIHardwareService.exe
+echo ""
+echo "------------------"
+echo "Killing Wineserver"
+echo "------------------"
+echo ""
+killall -w wineserver
+echo ""
+echo "------------------"
+echo "Wineserver is dead"
+echo "------------------"
+echo ""
+exit

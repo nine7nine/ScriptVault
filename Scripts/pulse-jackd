@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# load pulseaudio jack stuff
+
+sleep 3 &
+
+exec pulseaudio -kkk &
+
+exec pacmd load-module module-jack-sink module-jack-source set-default-sink jack_out set-default-source jack_in &
+
+exec pulseaudio -kkk
+

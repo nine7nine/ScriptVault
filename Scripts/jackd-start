@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec /usr/bin/jackd -P90 -dalsa -dhw:Generic_1,0 -r48000 -p512 -Xseq
+

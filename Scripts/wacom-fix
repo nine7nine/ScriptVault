@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Remap Wacom HID 51C4 Pen stylus (Lenovo ideapad stylus) 
+
+xsetwacom set "Wacom HID 51C4 Pen stylus" Button 2 3
