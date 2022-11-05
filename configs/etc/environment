@@ -1,0 +1,34 @@
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+#
+
+# Wine-NSPA
+#
+# Set the Wine-Prefix
+WINEPREFIX=/home/ninez/Winebox/winebox-master
+# Set wine path
+WINEPATH="/usr/lib"
+# RT policy should be FF
+WINE_RT_PRIO=80
+WINE_RT_POLICY="FF"
+# RT policy should be RR or FF.
+NTDLL_RT_PRIO=5
+NTDLL_RT_POLICY="RR"
+# Esync/Fsync
+WINEESYNC=1
+WINEFSYNC=1
+WINEFSYNC_SPINCOUNT=128
+# Proton's Logical cpus override
+WINE_LOGICAL_CPUS_AS_CORES=1
+# Large Address Awareness
+WINE_LARGE_ADDRESS_AWARE=1
+# From Staging
+STAGING_WRITECOPY=1
+# don't use with staging writecopy
+WINE_DISABLE_KERNEL_WRITEWATCH=1
+# Preloader Remap Stack 
+WINEPRELOADREMAPSTACK='on-conflict'
+# disable debugging/spam
+WINEDEBUG=-all
